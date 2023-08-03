@@ -66,7 +66,7 @@ const Register = () => {
           confirmPassword : " "
         })
         enqueueSnackbar('Registered Successfully', {variant : "success"});
-        // history.push(`/login`);
+        history.push("/login");
     } 
     catch(e){
       setLoading(false);
@@ -177,9 +177,9 @@ const Register = () => {
           )}
           <p className="secondary-action">
             Already have an account?{" "}
-            <a className='link' href='/login'>
+            <Link className='link' to='/login'>
               Login here
-            </a>
+            </Link>
           </p>
         </Stack>
       </Box>
