@@ -3,7 +3,7 @@ import ipConfig from "./ipConfig.json";
 import { Route, Switch } from "react-router-dom";
 import Login from "./components/Login";
 import Products from "./components/Products";
-import { ThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from "@emotion/react";
 import theme  from './theme';
 import React from 'react';
 import { BrowserRouter } from "react-router-dom";
