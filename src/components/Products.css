@@ -51,6 +51,12 @@
 .search-desktop {
   display: none !important;
 }
+.gridproducts{
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  padding-right: 0.6rem;
+  padding-top: 2rem;
+}
 
 @media screen and (min-width: 768px) {
   .hero {
@@ -68,5 +74,6 @@
   }
   .search-desktop {
     display: block !important;
+
   }
 }
