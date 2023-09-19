@@ -53,7 +53,7 @@ const Login = () => {
       let response = await axios.post(url,formData)
       let data=response.data;
       let{username,success,token,balance} = data;
-      console.log(username,success,token,balance)
+      // console.log(username,success,token,balance)
       setFormData({
         username:'',
         password:''

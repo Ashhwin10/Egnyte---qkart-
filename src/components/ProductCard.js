@@ -12,7 +12,7 @@ import React from "react";
 import "./ProductCard.css";
 
 
-const ProductCard = ({product}) => {
+const ProductCard = ({product, handleAddToCart}) => {
 //   let product ={
 // "name":"Tan Leatherette Weekender Duffle",
 // "category":"Fashion",
@@ -21,7 +21,6 @@ const ProductCard = ({product}) => {
 // "image":"https://crio-directus-assets.s3.ap-south-1.amazonaws.com/ff071a1c-1099-48f9-9b03-f858ccc53832.png",
 // "_id":"PmInA797xJhMIPti"
 // }
-  console.log(product.name)
   return (
     <Card className="card">
       <CardMedia
@@ -40,7 +39,7 @@ const ProductCard = ({product}) => {
 
         </CardContent>
         <CardActions>
-          <Button className="card-button" fullWidth variant="contained">
+          <Button className="card-button" fullWidth variant="contained" onClick={handleAddToCart}>
             <AddShoppingCartOutlined/>ADD TO CART
           </Button>
         </CardActions>
