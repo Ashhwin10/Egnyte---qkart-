@@ -24,7 +24,7 @@ import "./Cart.css";
 
 /**
  * @typedef {Object} CartItem -  - Data on product added to cart
- *
+ * 
  * @property {string} name - The name or title of the product in cart
  * @property {string} qty - The quantity of product added to cart
  * @property {string} category - The category that the product belongs to
@@ -87,6 +87,22 @@ export const getTotalCartValue = (items = []) => {
   return total;
 };
 
+// TODO: CRIO_TASK_MODULE_CHECKOUT - Implement function to return total cart quantity
+/**
+ * Return the sum of quantities of all products added to the cart
+ *
+ * @param { Array.<CartItem> } items
+ *    Array of objects with complete data on products in cart
+ *
+ * @returns { Number }
+ *    Total quantity of products added to the cart
+ *
+ */
+ export const getTotalItems = (items = []) => {
+ return items.length;
+};
+
+
 /**
  * Component to display the current quantity for a product and + and - buttons to update product quantity on cart
  *
@@ -131,7 +147,7 @@ const ItemQuantity = ({ value, handleAdd, handleDelete }) => {
  *
  *
  */
-const Cart = ({ products, items = [], handleQuantity }) => {
+const Cart = ({ products, items = [], handleQuantity ,isReadOnly}) => {
   let history = useHistory();
   if (items.length === 0 ) {
     return (
@@ -174,29 +190,31 @@ const Cart = ({ products, items = [], handleQuantity }) => {
                     justifyContent="space-between"
                     alignItems="center"
                   >
-                    <ItemQuantity
-                      // Add required props by checking implementation
-                      value={e.qty}
-                      handleAdd={async () => {
-                        await handleQuantity(
-                          token,
-                          items,
-                          products,
-                          e._id,
-                          e.qty + 1
-                        );
-                      }}
-                      handleDelete={async () => {
-                        await handleQuantity(
-                          token,
-                          items,
-                          products,
-                          e._id,
-                          e.qty - 1
-                        );
-                      }}
-                      productId={e._id}
-                    />
+                   {isReadOnly ? (
+                      <p>Qty: {e.qty}</p>
+                    ) : (
+                      <ItemQuantity
+                        value={e.qty}
+                        handleAdd={() =>
+                          handleQuantity(
+                            localStorage.getItem("token"),
+                            items,
+                            products,
+                            e._id,
+                            e.qty ? e.qty + 1 : 1
+                          )
+                        }
+                        handleDelete={() =>
+                          handleQuantity(
+                            localStorage.getItem("token"),
+                            items,
+                            products,
+                            e._id,
+                            e.qty ? e.qty - 1 : 1
+                          )
+                        }
+                      />
+                    )}
                     <Box padding="0.5rem" fontWeight="700">
                       ${e.cost}
                     </Box>
@@ -224,8 +242,8 @@ const Cart = ({ products, items = [], handleQuantity }) => {
               ${getTotalCartValue(items)}
             </Box>
           </Box>
-
-          <Box display="flex" justifyContent="flex-end" className="cart-footer">
+          {!isReadOnly ? (
+            <Box display="flex" justifyContent="flex-end" className="cart-footer">
             <Button
               color="primary"
               variant="contained"
@@ -239,6 +257,9 @@ const Cart = ({ products, items = [], handleQuantity }) => {
               Checkout
             </Button>
           </Box>
+          ) :(<></>)}
+
+          
         </Box>
       </>
     );

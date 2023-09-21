@@ -8,6 +8,7 @@ import { ThemeProvider } from "@emotion/react";
 import theme  from './theme';
 import React from 'react';
 import { BrowserRouter } from "react-router-dom";
+import Thanks from "./components/Thanks"
 
 export const config = {
   endpoint: `http://${ipConfig.workspaceIp}:8082/api/v1`,
@@ -25,6 +26,7 @@ function App() {
             <Route path="/register" component={Register}/>
             <Route path="/login" component={Login}/>
             <Route path="/checkout" component={Checkout}/>
+            <Route path="/thanks" component={Thanks}/>
           </Switch>
           {/* TODO: CRIO_TASK_MODULE_LOGIN - To add configure routes and their mapping */}
           {/* <Register /> */}
