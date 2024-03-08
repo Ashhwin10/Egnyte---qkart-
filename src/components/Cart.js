@@ -87,10 +87,8 @@ export const getTotalCartValue = (items = []) => {
   return total;
 };
 
-// TODO: CRIO_TASK_MODULE_CHECKOUT - Implement function to return total cart quantity
-/**
- * Return the sum of quantities of all products added to the cart
- *
+
+ 
  * @param { Array.<CartItem> } items
  *    Array of objects with complete data on products in cart
  *
