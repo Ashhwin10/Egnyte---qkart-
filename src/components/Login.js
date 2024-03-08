@@ -21,11 +21,7 @@ const Login = () => {
 
 
 
-   * Perform the Login API call
-   * @param {{ username: string, password: string }} formData
-   *  Object with values of username, password and confirm password user entered to register
-   *
-   * API endpoint - "POST /auth/login"
+   
 
   const login = async (formData) => {
     if(!validateInput(formData))return;
