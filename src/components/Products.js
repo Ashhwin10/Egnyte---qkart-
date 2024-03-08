@@ -19,18 +19,6 @@ import Cart, { generateCartItemsFrom } from "./Cart";
 import "./Cart.css";
 import { Warning } from "@mui/icons-material";
 
-// Definition of Data Structures used
-/**
- * @typedef {Object} Product - Data on product available to buy
- *
- * @property {string} name - The name or title of the product
- * @property {string} category - The category that the product belongs to
- * @property {number} cost - The price to buy the product
- * @property {number} rating - The aggregate rating of the product (integer out of five)
- * @property {string} image - Contains URL for the product image
- * @property {string} _id - Unique ID for the product
- */
-
 const Products = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [products, setProducts] = useState([]); //all products list
@@ -189,7 +177,6 @@ const Products = () => {
   return (
     <div>
       <Header>
-        {/* TODO: CRIO_TASK_MODULE_PRODUCTS - Display search bar in the header for Products page */}
         <TextField
           className="search-desktop"
           fullWidth
