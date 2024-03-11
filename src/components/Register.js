@@ -2,17 +2,20 @@ import { Button, CircularProgress, Stack, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
 import { useSnackbar } from "notistack";
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import { config } from "../App";
 import Footer from "./Footer";
 import Header from "./Header";
 import "./Register.css";
 import { useHistory, Link } from "react-router-dom";
 
+const ACTIONS = {
+  SET_DATA: "set-data",
+};
 
 function reducer(state, action) {
   switch (action.type) {
-    case "SET_DATA":
+    case ACTIONS.SET_DATA:
       return { ...state, [action.data]: action.value };
     default:
       return state;
@@ -22,9 +25,7 @@ function reducer(state, action) {
 const Register = () => {
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
-
-  
+  const [loading, setLoading] = React.useState(false);
 
   const [state, dispatch] = useReducer(reducer, {
     username: "",
@@ -32,47 +33,29 @@ const Register = () => {
     confirmPassword: "",
   });
 
- 
-  // const [formData, setFormData] = useState({
-  //   username: "",
-  //   password: "",
-  //   confirmPassword: "",
-  // });
-  
-
-  // let handleChange = (event) => {
-  //   const [key, value] = [event.target.name, event.target.value];
-  //   setFormData((formData) => ({ ...formData, [key]: value }));
-  // };
-
-  let handleChange = (event) => {
-    const {key, value} = [event.target];
-    dispatch({type: "SET_DATA" , data : key , value})
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    dispatch({ type: ACTIONS.SET_DATA, data: name, value });
   };
 
-
-  
- 
   const register = async () => {
-    const {username , password , confirmpassword} = state;
-    if (!validateInput(username , password , confirmpassword)) {
+    const { username, password, confirmPassword } = state;
+    if (!validateInput(state)) {
       return;
     }
 
     try {
       setLoading(true);
-      let url = `${config.endpoint}/auth/register`;
+      const url = `${config.endpoint}/auth/register`;
       await axios.post(url, {
-        username: state.username,
-        password: state.password,
+        username,
+        password,
       });
       setLoading(false);
 
-
-     dispatch({type : "SET_DATA" , data : "username" , value : ""});
-     dispatch({type : "SET_DATA" , data : "password" , value : ""});
-     dispatch({type : "SET_DATA" , data : "confirmpassword" , value : ""});
-
+      dispatch({ type: ACTIONS.SET_DATA, data: "username", value: "" });
+      dispatch({ type: ACTIONS.SET_DATA, data: "password", value: "" });
+      dispatch({ type: ACTIONS.SET_DATA, data: "confirmPassword", value: "" });
 
       enqueueSnackbar("Registered Successfully", { variant: "success" });
       history.push("/login");
@@ -89,30 +72,30 @@ const Register = () => {
     }
   };
 
- 
   const validateInput = (data) => {
     if (!data.username) {
-      enqueueSnackbar("username is a required field", { variant: "warning" });
+      enqueueSnackbar("Username is a required field", { variant: "warning" });
       return false;
     }
     if (data.username.length < 6) {
-      enqueueSnackbar("username must be more than 6 characters", {
+      enqueueSnackbar("Username must be more than 6 characters", {
         variant: "warning",
       });
       return false;
     }
     if (!data.password) {
-      enqueueSnackbar("password is a required field", { variant: "warning" });
+      enqueueSnackbar("Password is a required field", { variant: "warning" });
       return false;
     }
     if (data.password.length < 6) {
-      enqueueSnackbar("passworn must br more than 6 characters", {
+      enqueueSnackbar("Password must be more than 6 characters", {
         variant: "warning",
       });
       return false;
     }
     if (data.password !== data.confirmPassword) {
-      enqueueSnackbar("passwords do not match", { variant: "warning" });
+      enqueueSnackbar("Passwords do not match", { variant: "warning" });
+      return false;
     }
     return true;
   };
@@ -144,7 +127,7 @@ const Register = () => {
             label="Password"
             name="password"
             type="password"
-            helperText="Password must be atleast 6 characters length"
+            helperText="Password must be at least 6 characters long"
             fullWidth
             placeholder="Enter a password with minimum 6 characters"
             onChange={handleChange}
@@ -164,11 +147,7 @@ const Register = () => {
               style={{ margin: "16px auto 0", marginTop: "20px" }}
             />
           ) : (
-            <Button
-              className="button"
-              variant="contained"
-              onClick={() => register(formData)}
-            >
+            <Button className="button" variant="contained" onClick={register}>
               Register Now
             </Button>
           )}
@@ -186,5 +165,3 @@ const Register = () => {
 };
 
 export default Register;
-
-//add extra comment to push the the code again for assessment
