@@ -16,7 +16,7 @@ const ACTIONS = {
 function reducer(state, action) {
   switch (action.type) {
     case ACTIONS.SET_DATA:
-      return { ...state, [action.data]: action.value };
+      return { ...state, ...action.payload };
     default:
       return state;
   }
@@ -35,7 +35,7 @@ const Register = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    dispatch({ type: ACTIONS.SET_DATA, data: name, value });
+    dispatch({ type: ACTIONS.SET_DATA, payload: { [name]: value } });
   };
 
   const register = async () => {
@@ -53,9 +53,10 @@ const Register = () => {
       });
       setLoading(false);
 
-      dispatch({ type: ACTIONS.SET_DATA, data: "username", value: "" });
-      dispatch({ type: ACTIONS.SET_DATA, data: "password", value: "" });
-      dispatch({ type: ACTIONS.SET_DATA, data: "confirmPassword", value: "" });
+      dispatch({
+        type: ACTIONS.SET_DATA,
+        payload: { username: "", password: "", confirmpassword: "" },
+      });
 
       enqueueSnackbar("Registered Successfully", { variant: "success" });
       history.push("/login");
