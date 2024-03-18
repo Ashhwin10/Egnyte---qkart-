@@ -21,7 +21,6 @@ const Login = () => {
   };
   const [loading, setLoading] = useState(false);
 
-  // TODO: CRIO_TASK_MODULE_LOGIN - Fetch the API response
   const login = async (formData) => {
     if (!validateInput(formData)) return;
     try {
@@ -35,10 +34,16 @@ const Login = () => {
         username: "",
         password: "",
       });
+
+
       setLoading(false);
       enqueueSnackbar("logged in successfully", { variant: "success" });
       if (success) {
+
+        // reduxtoolkit - dispatch
+
         dispatch(loginSuccess())
+        
         persistLogin(token, username, balance);
       }
       history.push("/");
