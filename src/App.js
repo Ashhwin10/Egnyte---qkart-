@@ -11,7 +11,7 @@ import { BrowserRouter } from "react-router-dom";
 import Thanks from "./components/Thanks"
 
 export const config = {
-  endpoint: `http://${ipConfig.workspaceIp}:8082/api/v1`,
+  endpoint: `http://127.0.0.1:8082/api/v1`,
 };
 
 function App() {
